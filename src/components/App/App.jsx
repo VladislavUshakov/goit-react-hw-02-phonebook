@@ -19,13 +19,7 @@ export class App extends Component {
   };
 
   static propTypes = {
-    contacts: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
-      })
-    ).isRequired,
+    contacts: PropTypes.array.isRequired,
     title: PropTypes.string.isRequired,
   };
 
@@ -36,7 +30,9 @@ export class App extends Component {
 
   addContact = (newContact, { resetForm }) => {
     const { contacts } = this.state;
-    const isNewContact = !contacts.find(({ name }) => name === newContact.name);
+    const isNewContact = !contacts.find(
+      ({ name }) => name.toLowerCase() === newContact.name.toLowerCase()
+    );
     if (!isNewContact) {
       Report.failure(`${newContact.name} is already in contacts`, '', 'Okey', {
         position: 'center-bottom',
